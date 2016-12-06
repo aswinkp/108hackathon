@@ -1,0 +1,12 @@
+<template name="Emergency">
+	<div class="panel panel-{{#if police}}warning{{else}}{{#if ambulance}}primary{{else}}danger{{/if}}{{/if}}">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{casualities}}-{{reason}}</h3>
+  </div>
+  <div class="panel-body">
+    {{location}}
+      <button class="btn btn-xs btn-info viewEmergency">View</button>
+      <button class="btn btn-xs btn-success editEmergency"  data-toggle="modal" data-target="#editModal">Edit</button>
+  </div>
+</div>
+</template>

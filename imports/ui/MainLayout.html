@@ -1,0 +1,55 @@
+<template name="MainLayout">
+<header>
+	<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">108 Emergency</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+          {{#if currentUser }}
+        <li><button type="button" class="btn btn-danger navbar-addbtn" data-toggle="modal" data-target="#myModal">Add Emergency</button></li>
+          {{/if}}
+      </ul> 
+      <ul class="nav navbar-nav navbar-right">
+        {{> loginButtons}}
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+<main>
+<div class="row">
+    {{#if currentUser }}
+  <div class="col-md-3" >
+  <div class="left-bar">
+      {{#each emg}}
+        {{> Emergency}}
+      {{/each}}
+    </div>
+  </div>
+  <div class="col-md-5">
+      {{selectedEmg.reason}}
+      {{selectedEmg.casualities}}
+      {{selectedEmg.location}}
+      {{selectedEmg.name}}
+      {{selectedEmg.phone}}
+      {{> Template.dynamic template=middle}}
+   </div>
+  <div class="col-md-4">Nearby Emergency facilities list will be listed here.</div>
+    {{else}}
+        <h1>&nbsp;&nbsp;&nbsp;Please login to access dashboard</h1>
+    {{/if}}
+</div>
+{{> addEmergency}}
+</main>
+</template>
+
+
