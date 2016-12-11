@@ -1,6 +1,6 @@
 <template name="addEmergency">
     <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
 
             <!-- Modal content-->
             <div class="modal-content">
@@ -10,62 +10,74 @@
                         <h4 class="modal-title">Add New Emergency</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="serviceReqd">Service Required</label>
-                            <div class="col-sm-9">
-                                <div class="col-sm-4">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="fire"/> Fire & Rescue
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="ambulance"/> Ambulance
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="police"/> Police
-                                        </label>
-                                    </div>
+                        <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="phone">Phone</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control input-sm" name="phone"
+                                           placeholder="Phone Number" id="phone"/>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="reason">Reason</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="reason" placeholder="Reason"/>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="name">Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control input-sm" name="name" placeholder="Name" id="name"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="serviceReqd">Services</label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-4">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="fire"/> Fire
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="ambulance"/> Ambulance
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="police"/> Police
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="reason">Reason</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control input-sm" name="reason"
+                                           placeholder="Reason"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="casualities">Casualities</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control input-sm" name="casualities"
+                                           placeholder="No. Of Casualities"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="location">Location</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control input-sm" name="location"
+                                           placeholder="Location"/>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="casualities">No. Of Casualities</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="casualities"
-                                       placeholder="No. Of Casualities"/>
-                            </div>
+                        <div class="col-md-6">
+                            {{#each duplicate}}
+                                {{_id}}
+                            {{/each}}
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="location">Location</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="location" placeholder="Location"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="name">Name</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="name" placeholder="Name"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="phone">Phone Number</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="phone" placeholder="Phone Number"/>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -128,6 +140,25 @@
                     <div class="col-sm-9">
                         <input type="text" class="form-control" name="location" placeholder="Location"
                                value="{{editableEmg.location}}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="status">Status</label>
+                    <div class="col-sm-9">
+                        <div class="col-sm-4">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="assigned" checked="{{editableEmg.assigned}}"/> Assigned
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="complete" checked="{{editableEmg.complete}}"/> Complete
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

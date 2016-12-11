@@ -1,7 +1,8 @@
 <template name="Emergency">
     <div class="panel panel-{{#if police}}warning{{else}}{{#if ambulance}}primary{{else}}danger{{/if}}{{/if}}">
         <div class="panel-heading">
-            <h3 class="panel-title">{{casualities}}-{{reason}}</h3>
+            <span class="panel-title">{{casualities}}-{{reason}}</span>
+                <span class="pull-right">{{#if complete}}Complete{{else}}{{#if assigned}}Assigned{{/if}}{{/if}}</span>
         </div>
         <div class="panel-body">
             {{location}}
@@ -12,10 +13,8 @@
 
 <template name="unassignedEmergency">
     <div class="panel panel-{{#if police}}warning{{else}}{{#if ambulance}}primary{{else}}danger{{/if}}{{/if}}">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{casualities}}-{{reason}}</h3>
-        </div>
         <div class="panel-body">
+            <h3 class="panel-title">{{casualities}}-{{reason}}</h3>
             {{location}}
             <button class="btn btn-xs btn-info takeEmergency" style="float: right;">Take</button>
         </div>

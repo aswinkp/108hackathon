@@ -21,8 +21,15 @@
                                         data-target="#myModal">Add Emergency
                                 </button>
                             </li>
-                            <li>
-                                UnTaken Emergency
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle pulse" data-toggle="dropdown" role="button"
+                                   aria-expanded="false">New <span
+                                    class="badge">{{unassignedCount}}</span> <span class="caret"></span></a>
+                                <ul class="dropdown-menu unAssignedUL">
+                                    {{#each unassigned}}
+                                        {{> unassignedEmergency}}
+                                    {{/each}}
+                                </ul>
                             </li>
                         {{/if}}
                     </ul>
@@ -48,16 +55,12 @@
                     {{> Template.dynamic template=middle}}
                 </div>
                 <div class="col-md-4">
-                    {{unassignedCount}}
-                    {{#each unassigned}}
-                        {{> unassignedEmergency}}
-                    {{/each}}
                     {{#each nb}}
                         {{> nearby}}
                     {{/each}}
                 </div>
             {{else}}
-                <h1>&nbsp;&nbsp;&nbsp;Please login to access dashboard</h1>
+                <h1>Please login to access dashboard</h1>
             {{/if}}
         </div>
         {{> addEmergency}}

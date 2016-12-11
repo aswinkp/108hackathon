@@ -7,6 +7,7 @@ import './emergencyForms.html';
 Template.editEmergency.onCreated(function bodyOnCreated() {
     Meteor.subscribe('emergencies');
     this.editMode = new ReactiveVar(false);
+    this.duplicates = new ReactiveDict(false);
 });
 
 Template.editEmergency.helpers({
@@ -20,6 +21,9 @@ Template.editEmergency.helpers({
     },
     editMode: function () {
         return Template.instance().editMode.get();
+    },
+    duplicate() {
+        return Emergencies.find({phone: "8526520700"});
     }
 });
 
@@ -59,6 +63,11 @@ Template.addEmergency.events({
         target.phone.value = '';
         $('#myModal').modal('toggle');
     },
+    'blur #phone'(event) {
+        const target = event.target;
+        var emergency = Emergencies.find({phone: target.phone});
+        console.log(emergency);
+    }
 });
 Template.editEmergency.events({
     'click #openEdit'(event, template){
@@ -80,6 +89,8 @@ Template.editEmergency.events({
         const location = target.location.value;
         const name = target.name.value;
         const phone = target.phone.value;
+        const assigned = target.assigned.checked;
+        const complete = target.complete.checked;
         var editableEmergency = Session.get('selectedEmergency');
         const id = editableEmergency._id;
         // Insert a task into the collection
@@ -91,7 +102,9 @@ Template.editEmergency.events({
             casualities: casualities,
             location: location,
             name: name,
-            phone: phone
+            phone: phone,
+            assigned: assigned,
+            complete: complete
         });
         // Clear form
         target.fire.checked = false;

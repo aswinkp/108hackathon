@@ -66,3 +66,28 @@ html {
 .panel {
   margin-bottom: 7px;
 }
+
+.unAssignedUL {
+  min-width: 300px;
+  background-color: white!important;
+}
+
+@-webkit-keyframes pulse {
+  0% {background-color: red;}
+  25% {background-color: #222222;}
+  50% {background-color: #269abc;}
+  75% {background-color: #222222;}
+}
+
+.pulse {
+  -webkit-animation: pulse 1s infinite alternate;
+}
+
+#addForm .form-group{
+  margin-bottom: 5px;
+}
+
+#addForm input[type="text"]{
+  padding: 2px 8px;
+
+}

@@ -46,8 +46,10 @@ Meteor.methods({
             location: obj.location,
             name: obj.name,
             phone: obj.phone,
-            lat: obj.lat,
-            lng: obj.lng,
+            loc: {
+                type: "Point",
+                coordinates: [obj.lng, obj.lat]
+            },
             type: "mobile",
             createdAt: new Date(),
             updatedAt: new Date()
@@ -60,20 +62,27 @@ Meteor.methods({
     },
     'emergencies.update'(emergencyId, obj) {
         check(emergencyId, String);
-
-        Emergencies.update(emergencyId, {$set: {
-            fire: obj.fire,
-            ambulance: obj.ambulance,
-            police: obj.police,
-            reason: obj.reason,
-            casualities: obj.casualities,
-            location: obj.location,
-            lat: obj.lat,
-            lng: obj.lng,
-            name: obj.name,
-            phone: obj.phone,
-            updatedAt: new Date()
-        }});
+        console.log(obj.assigned);
+        console.log(obj.complete);
+        Emergencies.update(emergencyId, {
+            $set: {
+                fire: obj.fire,
+                ambulance: obj.ambulance,
+                police: obj.police,
+                reason: obj.reason,
+                casualities: obj.casualities,
+                location: obj.location,
+                loc: {
+                    type: "Point",
+                    coordinates: [obj.lng, obj.lat]
+                },
+                name: obj.name,
+                phone: obj.phone,
+                assigned: obj.assigned,
+                complete: obj.complete,
+                updatedAt: new Date()
+            }
+        });
     },
     'emergencies.take'(emergencyId) {
         check(emergencyId, String);
@@ -82,8 +91,9 @@ Meteor.methods({
 
         if (emergency.owner == null) {
             Emergencies.update(emergencyId, {$set: {owner: this.userId}});
-        }else {
-           throw new Meteor.Error('not-authorized');
+        } else {
+            throw new Meteor.Error('not-authorized');
         }
     },
+
 });

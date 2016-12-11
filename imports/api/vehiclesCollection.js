@@ -1,16 +1,19 @@
+/**
+ * Created by aswin on 11/12/16.
+ */
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
 import {check} from 'meteor/check';
 
-export const Nearby = new Mongo.Collection('nearby');
+export const Vehicles = new Mongo.Collection('vehicles');
 
 if (Meteor.isServer) {
     // This code only runs on the server
     Meteor.publish('nearby', function nearbyPublication() {
-        return Nearby.find();
+        return Vehicles.find();
     });
     // For API to access, below should be nessesary
-    Nearby.allow({
+    Vehicles.allow({
         'insert': function (userId, doc) {
             /* user and doc checks ,
              return true to allow insert */
@@ -20,16 +23,12 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    'nearby.insert'(obj) {
+    'vehicles.insert'(obj) {
         if (Meteor.isServer) {
             console.log("Inside Insert");
         }
-        Nearby.insert({
+        Vehicles.insert({
             name: obj.name,
-            addess1: obj.addess1,
-            addess2: obj.addess2,
-            city: obj.city,
-            distict: obj.distict,
             phone: obj.phone,
             loc: {
                 type: "Point",
@@ -39,15 +38,11 @@ Meteor.methods({
             updatedAt: new Date()
         });
     },
-    'nearby.update'(emergencyId, obj) {
+    'vehicles.update'(emergencyId, obj) {
         check(emergencyId, String);
-        Nearby.update(emergencyId, {
+        Vehicles.update(emergencyId, {
             $set: {
                 name: obj.name,
-                addess1: obj.addess1,
-                addess2: obj.addess2,
-                city: obj.city,
-                distict: obj.distict,
                 phone: obj.phone,
                 loc: {
                     type: "Point",
