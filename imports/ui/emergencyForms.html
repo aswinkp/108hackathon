@@ -76,81 +76,87 @@
             </div>
         </div>
     </div>
-    <div id="editModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+</template>
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <form class="form-horizontal" role="form" id="editForm">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Edit Emergency</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="serviceReqd">Service Required</label>
-                            <div class="col-sm-9">
-                                <div class="col-sm-4">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="fire" checked="{{editableEmg.fire}}"/> Fire & Rescue
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="ambulance" checked="{{editableEmg.ambulance}}"/> Ambulance
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="police" checked="{{editableEmg.police}}"/> Police
-                                        </label>
-                                    </div>
-                                </div>
+<template name="editEmergency">
+    {{#if editableEmg}}
+        {{#if editMode}}
+            <form class="form-horizontal" role="form" id="editForm">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="serviceReqd">Service Required</label>
+                    <div class="col-sm-9">
+                        <div class="col-sm-4">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="fire" checked="{{editableEmg.fire}}"/> Fire & Rescue
+                                </label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="reason">Reason</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="reason" placeholder="Reason" value="{{editableEmg.reason}}"/>
+                        <div class="col-sm-4">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="ambulance" checked="{{editableEmg.ambulance}}"/>
+                                    Ambulance
+                                </label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="casualities">No. Of Casualities</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="casualities"
-                                       placeholder="No. Of Casualities" value="{{editableEmg.casualities}}"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="location">Location</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="location" placeholder="Location" value="{{editableEmg.location}}"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="name">Name</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="name" placeholder="Name" value="{{editableEmg.name}}"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="phone">Phone Number</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" name="phone" placeholder="Phone Number" value="{{editableEmg.phone}}"/>
+                        <div class="col-sm-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="police" checked="{{editableEmg.police}}"/> Police
+                                </label>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-primary" id="editEmergency" value="Edit Emergency">
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="reason">Reason</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="reason" placeholder="Reason"
+                               value="{{editableEmg.reason}}"/>
                     </div>
-                </form>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="casualities">No. Of Casualities</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="casualities"
+                               placeholder="No. Of Casualities" value="{{editableEmg.casualities}}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="location">Location</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="location" placeholder="Location"
+                               value="{{editableEmg.location}}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="name">Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="name" placeholder="Name"
+                               value="{{editableEmg.name}}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="phone">Phone Number</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="phone" placeholder="Phone Number"
+                               value="{{editableEmg.phone}}"/>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary" id="editEmergency" value="Save">
+                <button type="button" id="closeEdit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </form>
+        {{else}}
+            <div class="panel panel-default">
+                <div class="panel panel-body">
+                    <p>{{editableEmg.reason}} - {{editableEmg.casualities}}</p>
+                    <p>{{editableEmg.location}}</p>
+                    <p>{{editableEmg.name}}</p>
+                    <p>{{editableEmg.phone}}</p>
+                    <button type="button" id="openEdit" class="btn btn-default" data-dismiss="modal">Edit</button>
+                </div>
             </div>
-        </div>
-    </div>
+        {{/if}}
+    {{/if}}
 </template>
