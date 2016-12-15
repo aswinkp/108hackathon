@@ -9,7 +9,7 @@ export const Vehicles = new Mongo.Collection('vehicles');
 
 if (Meteor.isServer) {
     // This code only runs on the server
-    Meteor.publish('nearby', function nearbyPublication() {
+    Meteor.publish('vehicles', function vehiclesPublication() {
         return Vehicles.find();
     });
     // For API to access, below should be nessesary
@@ -34,6 +34,7 @@ Meteor.methods({
                 type: "Point",
                 coordinates: [obj.lng, obj.lat]
             },
+            status: obj.status,
             createdAt: new Date(),
             updatedAt: new Date()
         });
@@ -48,6 +49,7 @@ Meteor.methods({
                     type: "Point",
                     coordinates: [obj.lng, obj.lat]
                 },
+                status: obj.status,
                 updatedAt: new Date()
             }
         });

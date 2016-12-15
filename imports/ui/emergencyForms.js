@@ -4,10 +4,25 @@ import {Emergencies} from '../api/emergenciesCollection.js';
 
 import './emergencyForms.html';
 
-Template.editEmergency.onCreated(function bodyOnCreated() {
-    Meteor.subscribe('emergencies');
+Template.addEmergency.onCreated(function addEmgOnCreated() {
+    this.phone = new ReactiveVar(0);
+});
+
+Template.addEmergency.onRendered(function () {
+    this.autorun(function () {
+        var phone = Session.get('phone');
+        Meteor.subscribe(9444585142)
+    }.bind(this));
+});
+
+Template.editEmergency.onCreated(function editEmgOnCreated() {
     this.editMode = new ReactiveVar(false);
-    this.duplicates = new ReactiveDict(false);
+});
+
+Template.addEmergency.helpers({
+    duplicates: function () {
+        return Emergencies.find({phone: Template.instance().phone.get()});
+    }
 });
 
 Template.editEmergency.helpers({
@@ -21,9 +36,6 @@ Template.editEmergency.helpers({
     },
     editMode: function () {
         return Template.instance().editMode.get();
-    },
-    duplicate() {
-        return Emergencies.find({phone: "8526520700"});
     }
 });
 
@@ -63,10 +75,10 @@ Template.addEmergency.events({
         target.phone.value = '';
         $('#myModal').modal('toggle');
     },
-    'blur #phone'(event) {
+    'blur #phone'(event, template) {
         const target = event.target;
-        var emergency = Emergencies.find({phone: target.phone});
-        console.log(emergency);
+        Session.set('phone', target.value);
+        template.phone = target.value;
     }
 });
 Template.editEmergency.events({
