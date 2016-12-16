@@ -4,3 +4,11 @@ import {Emergencies} from '../api/emergenciesCollection.js';
 import {Nearby} from '../api/nearbyCollection.js';
 
 import './nearby.html';
+
+
+Template.nearby.events({
+    'click .assignFor'(event){
+        var emg = Session.get('selectedEmergency', this);
+        Meteor.call('emergencies.assign',emg._id, this);
+    }
+});

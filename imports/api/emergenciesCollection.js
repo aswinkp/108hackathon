@@ -106,5 +106,15 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
     },
+    'emergencies.assign'(emergencyId, nearby){
+        check(emergencyId, String);
+
+        const emergency = Emergencies.findOne(emergencyId);
+        if (this.userId != null) {
+            Emergencies.update(emergencyId, {$push: {assigned: nearby}});
+        } else {
+            throw new Meteor.Error('not-authorized');
+        }
+    }
 
 });

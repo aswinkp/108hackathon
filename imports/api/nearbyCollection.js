@@ -21,9 +21,6 @@ if (Meteor.isServer) {
 
 Meteor.methods({
     'nearby.insert'(obj) {
-        if (Meteor.isServer) {
-            console.log("Inside Insert");
-        }
         Nearby.insert({
             name: obj.name,
             addess1: obj.addess1,

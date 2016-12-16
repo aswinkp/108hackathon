@@ -197,5 +197,11 @@
                 </div>
             </div>
         {{/if}}
+
+        {{#if editableEmg.assigned}}
+            {{#each assigned editableEmg.assigned}}
+                {{assigned._id}}
+            {{/each}}
+        {{/if}}
     {{/if}}
 </template>
