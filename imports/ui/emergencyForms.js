@@ -4,14 +4,10 @@ import {Emergencies} from '../api/emergenciesCollection.js';
 
 import './emergencyForms.html';
 
-Template.addEmergency.onCreated(function addEmgOnCreated() {
-    this.phone = new ReactiveVar(0);
-});
-
 Template.addEmergency.onRendered(function () {
     this.autorun(function () {
         var phone = Session.get('phone');
-        Meteor.subscribe(9444585142)
+        Meteor.subscribe('by_phone', phone);
     }.bind(this));
 });
 
@@ -21,8 +17,13 @@ Template.editEmergency.onCreated(function editEmgOnCreated() {
 
 Template.addEmergency.helpers({
     duplicates: function () {
+        var phone = Session.get('phone');
+        return Emergencies.find({phone: phone}, {sort : {updatedAt: -1}}, {limit: 1});
+    },
+    duplicates2: function () {
         return Emergencies.find({phone: Template.instance().phone.get()});
-    }
+    },
+
 });
 
 Template.editEmergency.helpers({
@@ -78,7 +79,6 @@ Template.addEmergency.events({
     'blur #phone'(event, template) {
         const target = event.target;
         Session.set('phone', target.value);
-        template.phone = target.value;
     }
 });
 Template.editEmergency.events({
@@ -87,6 +87,9 @@ Template.editEmergency.events({
     },
     'click #closeEdit'(event, template){
         template.editMode.set(false);
+    },
+    'click #assign'(event,template){
+        Session.set('assignMode',true)
     },
     'submit #editForm'(event, template){
         // Prevent default browser form submit

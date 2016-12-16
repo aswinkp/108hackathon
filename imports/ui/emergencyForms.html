@@ -75,7 +75,14 @@
                         </div>
                         <div class="col-md-6">
                             {{#each duplicates}}
-                                {{phone}}-{{_id}}<br>
+                                    <div class="panel panel-{{#if police}}warning{{else}}{{#if ambulance}}primary{{else}}danger{{/if}}{{/if}}">
+                                        <div class="panel-body">
+                                            <h3 class="panel-title">{{casualities}}-{{reason}}</h3>
+                                            {{location}}
+                                            {{livestamp createdAt}}
+                                            <!--<button class="btn btn-xs btn-info takeEmergency" style="float: right;">Take</button>-->
+                                        </div>
+                                    </div>
                             {{/each}}
                         </div>
                         </div>
@@ -186,6 +193,7 @@
                     <p>{{editableEmg.name}}</p>
                     <p>{{editableEmg.phone}}</p>
                     <button type="button" id="openEdit" class="btn btn-default" data-dismiss="modal">Edit</button>
+                    <button type="button" id="assign" class="btn btn-default" data-dismiss="modal">Assign</button>
                 </div>
             </div>
         {{/if}}

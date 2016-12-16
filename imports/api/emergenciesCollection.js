@@ -7,8 +7,20 @@ export const Emergencies = new Mongo.Collection('emergencies');
 if (Meteor.isServer) {
     // This code only runs on the server
     Meteor.publish('emergencies', function emergenciesPublication() {
-        return Emergencies.find();
+        return Emergencies.find({
+            "$or": [{
+                        "owner": this.userId
+                    }, {
+                        "owner": null
+                    }]
+        });
     });
+
+    Meteor.publish('by_phone', function emergenciesbyPhonePub(phone){
+        return Emergencies.find({phone: phone}, {sort : {updatedAt: -1}}, {limit: 1});
+    });
+
+    Meteor.publish();
     // For API to access, below should be nessesary
     Emergencies.allow({
         'insert': function (userId, doc) {
@@ -31,7 +43,7 @@ Meteor.methods({
             name: obj.name,
             phone: obj.phone,
             type: "manual",
-            owner: this.userId,
+            owner: [this.userId],
             createdAt: new Date(),
             updatedAt: new Date()
         });
@@ -88,9 +100,8 @@ Meteor.methods({
         check(emergencyId, String);
 
         const emergency = Emergencies.findOne(emergencyId);
-
-        if (emergency.owner == null) {
-            Emergencies.update(emergencyId, {$set: {owner: this.userId}});
+        if (this.userId != null) {
+            Emergencies.update(emergencyId, {$push: {owner: this.userId}});
         } else {
             throw new Meteor.Error('not-authorized');
         }

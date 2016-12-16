@@ -6,11 +6,15 @@ import {Nearby} from '../api/nearbyCollection.js';
 import './emergencyForms.js';
 import './Emergency.html';
 import './MainLayout.html';
-import './nearby.html';
+import './nearby.js';
 
 Template.MainLayout.onCreated(function bodyOnCreated() {
     Meteor.subscribe('emergencies');
     Meteor.subscribe('nearby');
+});
+
+Template.registerHelper('gt',function (a,b) {
+   return a>b;
 });
 
 Template.MainLayout.helpers({
@@ -18,7 +22,14 @@ Template.MainLayout.helpers({
         return Emergencies.find({owner : Meteor.userId()}, {sort : {updatedAt: -1}});
     },
     nb : function(){
-         return Nearby.find({});
+        var assignMode = Session.get('assignMode');
+        var emergency = Session.get('selectedEmergency');
+        if(assignMode){
+           return Nearby.find({});
+        }else{
+            return null;
+        }
+
     },
     unassigned : function(){
         return Emergencies.find({ owner : null}, {sort : {updatedAt: -1}});
@@ -57,6 +68,7 @@ Template.MainLayout.events({
      },*/
     'click .viewEmergency'(event){
         $('.selectedEmg').removeClass('selectedEmg');
+        Session.set('assignMode', false);
         Session.set('selectedEmergency', this);
         $(event.target).closest('.panel').addClass('selectedEmg');
     },
