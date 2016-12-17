@@ -63,37 +63,59 @@ Meteor.methods({
             }
         });
     },
-    'base.updateLocation'(baseId, obj){
+    'base.assign'(obj){
+        baseId = obj.baseId;
+        emg = obj.emg;
+        Base.update(baseId, {
+            $push: {
+                currently_assigned: emg
+            }
+        });
+    },
+    'base.complete'(obj){
+        var baseId = obj.baseId;
+        var emgId = obj.emgId;
+        Base.update(baseId, {
+            $pull: { currently_assigned: { _id: emgId}}
+        });
+    },
+    'base.updateLocation'(obj){
+        var baseId = obj.baseId;
+        var lat = obj.lat;
+        var lng = obj.lng;
         check(baseId, String);
         Base.update(baseId, {
             $set: {
                 loc: {
                     type: "Point",
-                    coordinates: [obj.lng, obj.lat]
+                    coordinates: [lng, lat]
                 },
                 updatedAt: new Date()
             }
         });
     },
-    'base.updateStatus'(baseId, obj){
-        if (obj.status == "offline") {
-            var status = {
+    'base.updateStatus'(obj){
+        var baseId = obj.baseId;
+        var status = obj.status;
+        var stats;
+        if (status == "offline") {
+            stats = {
                 loc: null,
-                status: obj.status,
+                status: obj.stats,
                 updatedAt: new Date()
             }
-        } else if (obj.status == "busy") {
-            var status = {
-                status: obj.status,
+        } else if (status == "busy") {
+            stats = {
+                status: obj.stats,
                 updatedAt: new Date()
             }
         } else if(obj.status == "available"){
-            var status = {
-                loc: {
+            stats = {
+                /*loc: {
                     type: "Point",
                     coordinates: [obj.lng, obj.lat]
-                },
-                status: obj.status,
+                },*/
+                status: status,
                 updatedAt: new Date()
             }
         }

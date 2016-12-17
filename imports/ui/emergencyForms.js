@@ -70,6 +70,7 @@ Template.addEmergency.events({
         const police = target.police.checked;
         const reason = target.reason.value;
         const casualities = target.casualities.value;
+        const address = target.address.value;
         const location = target.location.value;
         const name = target.name.value;
         const phone = target.phone.value;
@@ -82,6 +83,7 @@ Template.addEmergency.events({
          police: police,
          reason: reason,
          casualities: casualities,
+         address: address,
          location: location,
          name: name,
          phone: phone,
@@ -95,6 +97,7 @@ Template.addEmergency.events({
          target.reason.value = '';
          target.casualities.value = '';
          target.location.value = '';
+         target.address.value = '';
          target.name.value = '';
          target.phone.value = '';
          target.lat.value = '';

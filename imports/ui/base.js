@@ -32,7 +32,14 @@ Template.base.events({
         var assigned = Session.get('assignedBase');
         assigned.push(this._id);
         Session.set('assignedBase', assigned);
-        Meteor.call('emergencies.assign', emg._id, this);
+        Meteor.call('emergencies.assign', {
+            emergencyId: emg._id,
+            base: this
+        });
+        Meteor.call('base.assign', {
+            baseId: this._id,
+            emg: emg
+        });
     }
 });
 

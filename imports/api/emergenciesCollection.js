@@ -39,6 +39,7 @@ Meteor.methods({
             police: obj.police,
             reason: obj.reason,
             casualities: obj.casualities,
+            address: obj.address,
             location: obj.location,
             name: obj.name,
             condition: obj.condition,
@@ -113,14 +114,16 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
     },
-    'emergencies.assign'(emergencyId, base){
+    'emergencies.assign'(obj){
+        emergencyId = obj.emergencyId;
+        base = obj.base;
         check(emergencyId, String);
 
         const emergency = Emergencies.findOne(emergencyId);
         if (this.userId != null) {
             Emergencies.update(emergencyId,
-                {$push: {assigned: base}},
-                {$set: {}});
+                {$push: {assigned: base}}
+            );
         } else {
             throw new Meteor.Error('not-authorized');
         }
