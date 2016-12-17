@@ -5,7 +5,10 @@
                 <span class="pull-right">{{#if complete}}Complete{{else}}{{#if assigned}}Assigned{{/if}}{{/if}}</span>
         </div>
         <div class="panel-body">
-            {{location}}
+            {{location}}<br>
+        </div>
+        <div class="panel-footer">
+            {{livestamp createdAt}}
             <button class="btn btn-xs btn-info viewEmergency" style="float: right;">View</button>
         </div>
     </div>

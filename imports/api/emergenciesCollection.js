@@ -9,15 +9,15 @@ if (Meteor.isServer) {
     Meteor.publish('emergencies', function emergenciesPublication() {
         return Emergencies.find({
             "$or": [{
-                        "owner": this.userId
-                    }, {
-                        "owner": null
-                    }]
+                "owner": this.userId
+            }, {
+                "owner": null
+            }]
         });
     });
 
-    Meteor.publish('by_phone', function emergenciesbyPhonePub(phone){
-        return Emergencies.find({phone: phone}, {sort : {updatedAt: -1}}, {limit: 1});
+    Meteor.publish('by_phone', function emergenciesbyPhonePub(phone) {
+        return Emergencies.find({phone: phone}, {sort: {updatedAt: -1}}, {limit: 1});
     });
 
     Meteor.publish();
@@ -41,14 +41,20 @@ Meteor.methods({
             casualities: obj.casualities,
             location: obj.location,
             name: obj.name,
+            condition: obj.condition,
             phone: obj.phone,
             type: "manual",
+            loc: {
+                type: "Point",
+                coordinates: [obj.lng, obj.lat]
+            },
             owner: [this.userId],
             createdAt: new Date(),
             updatedAt: new Date()
         });
     },
     'emergencies.apiinsert'(obj) {
+        console.log(obj);
         Emergencies.insert({
             fire: obj.fire,
             ambulance: obj.ambulance,
@@ -57,6 +63,7 @@ Meteor.methods({
             casualities: obj.casualities,
             location: obj.location,
             name: obj.name,
+            condition: obj.condition,
             phone: obj.phone,
             loc: {
                 type: "Point",
@@ -106,12 +113,14 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
     },
-    'emergencies.assign'(emergencyId, nearby){
+    'emergencies.assign'(emergencyId, base){
         check(emergencyId, String);
 
         const emergency = Emergencies.findOne(emergencyId);
         if (this.userId != null) {
-            Emergencies.update(emergencyId, {$push: {assigned: nearby}});
+            Emergencies.update(emergencyId,
+                {$push: {assigned: base}},
+                {$set: {}});
         } else {
             throw new Meteor.Error('not-authorized');
         }

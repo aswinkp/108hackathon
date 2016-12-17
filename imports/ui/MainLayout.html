@@ -10,7 +10,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">108 Emergency</a>
+                    <a class="navbar-brand" href="/">Emergency Response Centre</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -21,6 +21,14 @@
                                         data-target="#myModal">Add Emergency
                                 </button>
                             </li>
+                            {{#if isInRole 'admin' 'admin'}}
+                            <li class="nav">
+                                <a href="{{pathFor 'userManagement'}}">User Management</a>
+                            </li>
+                            <li class="nav">
+                                <a href="{{pathFor 'base'}}">Base Management</a>
+                            </li>
+                            {{/if}}
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle {{#if gt unassignedCount 0}} pulse{{/if}}" data-toggle="dropdown" role="button"
                                    aria-expanded="false">New <span
@@ -40,31 +48,11 @@
             </div>
         </nav>
     </header>
-    <main>
-        <div class="row">
-            {{#if currentUser }}
-                <div class="col-md-3">
-                    <div class="left-bar">
-                        {{#each emg}}
-                            {{> Emergency}}
-                        {{/each}}
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    {{> editEmergency}}
-                    {{> Template.dynamic template=middle}}
-                </div>
-                <div class="col-md-4">
-                    {{#each nb}}
-                        {{> nearby}}
-                    {{/each}}
-                </div>
-            {{else}}
-                <h1>Please login to access dashboard</h1>
-            {{/if}}
-        </div>
-        {{> addEmergency}}
-    </main>
+    {{#if currentUser }}
+        {{> Template.dynamic template=main}}
+    {{else}}
+        <h1>Please login to access dashboard</h1>
+    {{/if}}
 </template>
 
 

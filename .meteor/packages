@@ -23,10 +23,13 @@ shell-server@0.2.1            # Server-side component of the `meteor shell` comm
 twbs:bootstrap
 kadira:flow-router
 kadira:blaze-layout
-dburles:google-maps
 stylus
 accounts-password
 ian:accounts-ui-bootstrap-3
 simple:rest
 session
 copleykj:livestamp
+alanning:roles
+arillo:flow-router-helpers
+fermuch:geolib
+jeremy:geocomplete

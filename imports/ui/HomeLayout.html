@@ -1,11 +1,25 @@
 <template name="HomeLayout">
-<body>
-  <header>
-  	<h1>Home Layout</h1>
-    {{> loginButtons}}
-  </header>
-  <main>
-    <h1>Organize your billboards</h1>
-  </main>
-  </body>
+    <main>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="left-bar">
+                    {{#each emg}}
+                        {{> Emergency}}
+                    {{/each}}
+                </div>
+            </div>
+            <div class="col-md-5">
+                {{> editEmergency}}
+                <!--{{> Template.dynamic template=middle}}-->
+            </div>
+            <div class="col-md-4">
+                {{#each nb}}
+                    {{> base}}
+                {{/each}}
+            </div>
+        </div>
+        {{> addEmergency}}
+    </main>
 </template>
+
+

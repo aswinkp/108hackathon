@@ -1,3 +1,4 @@
+/*
 import {Template} from 'meteor/templating';
 import {Markers} from '../api/marker.js';
 import './map.html';
@@ -75,4 +76,4 @@ Template.map.onCreated(function () {
             }
         });
     });
-});
+});*/

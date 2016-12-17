@@ -1,0 +1,18 @@
+<template name="UserManagement">
+    <h1>User Management</h1>
+    <form class="form-inline" id="addUserForm">
+        <div class="form-group ">
+            <label for="email">Email address:</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <div class="checkbox ">
+            <label><input type="checkbox" name="isAdmin" id="isAdmin">Admin</label>
+        </div>
+         <input type="submit" class="btn btn-primary" id="addUser" value="Submit">
+        <button type="reset" class="btn btn-default">Reset</button>
+    </form>
+</template>

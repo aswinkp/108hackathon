@@ -1,0 +1,44 @@
+<template name="base">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{name}}<br>
+            {{distance loc}}
+            {{#if equals status "busy"}}
+                <button class="btn btn-xs btn-danger" disabled style="float: right;">Busy</button>
+            {{/if}}
+            {{#if isInArray _id}}
+                <button class="btn btn-xs btn-default" disabled style="float: right;">Assigned</button>
+            {{else}}
+                <button class="btn btn-xs btn-info assignFor" style="float: right;">Assign</button>
+            {{/if}}
+        </div>
+    </div>
+</template>
+
+<template name="baseForm">
+    <h1>Bases Management</h1>
+    <form class="form-inline" id="addbase">
+        <div class="form-group ">
+            <label for="vehicle">Vehicle Number:</label>
+            <input type="text" class="form-control" id="vehicle_id" name="vehicle_id">
+        </div>
+        <div class="form-group ">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="phone" class="form-control" id="phone" name="phone">
+        </div>
+        <div class="form-group">
+            <label for="lat">Latitude:</label>
+            <input type="text" class="form-control" id="lat" name="lat">
+        </div>
+        <div class="form-group">
+            <label for="lng">Longitude:</label>
+            <input type="text" class="form-control" id="lng" name="lng">
+        </div>
+         <input type="submit" class="btn btn-primary" id="addBase" value="Submit">
+        <button type="reset" class="btn btn-default">Reset</button>
+    </form>
+</template>
