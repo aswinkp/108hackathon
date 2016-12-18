@@ -1,9 +1,9 @@
 <template name="addEmergency">
     <script>
-        window.onload = function() {
-          var autocomplete = new google.maps.places.Autocomplete(
-            (document.getElementById('location')),{types: ['geocode'] }
-          );
+        window.onload = function () {
+            var autocomplete = new google.maps.places.Autocomplete(
+                    (document.getElementById('location')), {types: ['geocode']}
+            );
         };
     </script>
     <div id="myModal" class="modal fade" role="dialog">
@@ -18,91 +18,93 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="phone">Phone</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control input-sm" name="phone"
-                                           placeholder="Phone Number" id="phone" required/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="name">Name</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control input-sm" name="name" placeholder="Name" id="name"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="serviceReqd">Services</label>
-                                <div class="col-sm-9">
-                                    <div class="col-sm-4">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="fire"/> Fire
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="ambulance"/> Ambulance
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="police"/> Police
-                                            </label>
-                                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="phone">Phone</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control input-sm" name="phone"
+                                               placeholder="Phone Number" id="phone" required/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="reason">Reason</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control input-sm" name="reason"
-                                           placeholder="Reason"/>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="name">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control input-sm" name="name" placeholder="Name"
+                                               id="name"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="serviceReqd">Services</label>
+                                    <div class="col-sm-9">
+                                        <div class="col-sm-4">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="fire"/> Fire
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="ambulance"/> Ambulance
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="police"/> Police
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="reason">Reason</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control input-sm" name="reason"
+                                               placeholder="Reason"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="casualities">Casualities</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control input-sm" name="casualities"
+                                               placeholder="No. Of Casualities"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="address">Address</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control input-sm" name="address" id="address"
+                                               placeholder="Address"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" for="location">Landmark/Area</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control input-sm" data-geo="formatted_address"
+                                               name="location" id="location"
+                                               placeholder="Landmark/Area"/>
+                                        <input type="hidden" name="lat" data-geo="lat">
+                                        <input type="hidden" name="lng" data-geo="lng">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="casualities">Casualities</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control input-sm" name="casualities"
-                                           placeholder="No. Of Casualities"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="address">Address</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control input-sm" name="address" id="address"
-                                           placeholder="Address"/>
-                                    <input type="hidden" name="lat" data-geo="lat">
-                                    <input type="hidden" name="lng" data-geo="lng">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" for="location">Location</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control input-sm" data-geo="formatted_address" name="location" id="location"
-                                           placeholder="Location"/>
-                                    <input type="hidden" name="lat" data-geo="lat">
-                                    <input type="hidden" name="lng" data-geo="lng">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            {{#each duplicates}}
+                            <div class="col-md-6">
+                                {{#each duplicates}}
                                     <div class="panel panel-{{#if police}}warning{{else}}{{#if ambulance}}primary{{else}}danger{{/if}}{{/if}}">
                                         <div class="panel-body">
                                             <h3 class="panel-title">{{casualities}}-{{reason}}</h3>
                                             {{location}}<br>
                                             {{livestamp createdAt}}
-                                            <button  type="button" class="btn btn-xs btn-info selectEmergency" style="float: right;">Select</button>
+                                            <button type="button" class="btn btn-xs btn-info selectEmergency"
+                                                    style="float: right;">Select
+                                            </button>
                                         </div>
                                     </div>
-                            {{/each}}
-                        </div>
+                                {{/each}}
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -161,10 +163,17 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="location">Location</label>
+                    <label class="col-sm-3 control-label" for="address">Address</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="location" placeholder="Location"
-                               value="{{editableEmg.location}}"/>
+                        <input type="text" class="form-control input-sm" name="address" id="address"
+                               placeholder="Address" disabled/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="location">Landmark/Area</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="location" placeholder="Landmark/Area"
+                               value="{{editableEmg.location}}" disabled/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -190,7 +199,7 @@
                     <label class="col-sm-3 control-label" for="phone">Phone Number</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" name="phone" placeholder="Phone Number"
-                               value="{{editableEmg.phone}}"/>
+                               value="{{editableEmg.phone}}" disabled/>
                     </div>
                 </div>
                 <input type="submit" class="btn btn-primary" id="editEmergency" value="Save">
@@ -208,17 +217,37 @@
                 </div>
             </div>
         {{/if}}
+        <div class="row">
+            <div class="col-sm-8">
+                <h6>Possible Duplicates</h6>
+                {{#each duplicates}}
+                    {{#if ne  _id editableEmg._id}}
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                {{location}}<br>
+                                {{casualities}}-{{reason}}<br>
+                                {{livestamp createdAt}} - {{round dist.calculated}} KMs from here
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+            <div class="col-sm-4">
+                <h6>Assigned Vehicles</h6>
+                {{#if editableEmg.assigned}}
+                    {{#each editableEmg.assigned}}
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                {{name}}<br>
+                                {{phone}}<br>
+                            </div>
+                        </div>
 
-        {{#if editableEmg.assigned}}
-            {{#each editableEmg.assigned}}
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        {{name}}<br>
-                {{phone}}<br>
-                    </div>
-                </div>
+                    {{/each}}
+                {{/if}}
+            </div>
+        </div>
 
-            {{/each}}
-        {{/if}}
+
     {{/if}}
 </template>

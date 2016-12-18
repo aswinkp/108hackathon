@@ -12,12 +12,10 @@ import './emergencyForms.html';
  Template.addEmergency.rendered = initAutoComplete;*/
 
 
-Template.addEmergency.onRendered(function () {
-    this.autorun(function () {
-        var phone = Session.get('phone');
-        Meteor.subscribe('by_phone', phone);
-    }.bind(this));
-});
+
+/*Template.registerHelper('round',function (num) {
+   return a>b;
+});*/
 
 Template.addEmergency.onRendered(function () {
     this.autorun(function () {
@@ -30,19 +28,32 @@ Template.addEmergency.onRendered(function () {
     });
 });
 
+Template.addEmergency.onRendered(function () {
+    this.autorun(function () {
+        var phone = Session.get('phone');
+        Meteor.subscribe('by_phone', phone);
+    }.bind(this));
+});
+
 Template.editEmergency.onCreated(function editEmgOnCreated() {
     this.editMode = new ReactiveVar(false);
+    this.duplicates = new ReactiveVar();
 });
 
 Template.addEmergency.helpers({
     duplicates: function () {
         var phone = Session.get('phone');
         return Emergencies.find({phone: phone}, {sort: {updatedAt: -1}}, {limit: 1});
-    },
-    duplicates2: function () {
-        return Emergencies.find({phone: Template.instance().phone.get()});
-    },
+    }
 
+});
+
+Template.registerHelper('ne',function (a,b) {
+   return a!=b;
+});
+
+Template.registerHelper('round',function (num) {
+    return num.toFixed(2);
 });
 
 Template.editEmergency.helpers({
@@ -56,6 +67,14 @@ Template.editEmergency.helpers({
     },
     editMode: function () {
         return Template.instance().editMode.get();
+    },
+    duplicates_finder: function () {
+
+        return []
+    },
+    duplicates: function(){
+
+        return Session.get("duplicates");
     }
 });
 
@@ -76,32 +95,38 @@ Template.addEmergency.events({
         const phone = target.phone.value;
         const lat = target.lat.value;
         const lng = target.lng.value;
+        console.log(target);
+        console.log(lat);
+        console.log(lng);
+        console.log(target.lat);
+        console.log(target.lat.value);
+        console.log(target.lng.value);
         // Insert a task into the collection
         Meteor.call('emergencies.insert', {
-         fire: fire,
-         ambulance: ambulance,
-         police: police,
-         reason: reason,
-         casualities: casualities,
-         address: address,
-         location: location,
-         name: name,
-         phone: phone,
-         lat: lat,
-         lng: lng
-         });
-         // Clear form
-         target.fire.checked = false;
-         target.ambulance.checked = false;
-         target.police.checked = false;
-         target.reason.value = '';
-         target.casualities.value = '';
-         target.location.value = '';
-         target.address.value = '';
-         target.name.value = '';
-         target.phone.value = '';
-         target.lat.value = '';
-         target.lng.value = '';
+            fire: fire,
+            ambulance: ambulance,
+            police: police,
+            reason: reason,
+            casualities: casualities,
+            address: address,
+            location: location,
+            name: name,
+            phone: phone,
+            lat: lat,
+            lng: lng
+        });
+        // Clear form
+        target.fire.checked = false;
+        target.ambulance.checked = false;
+        target.police.checked = false;
+        target.reason.value = '';
+        target.casualities.value = '';
+        target.location.value = '';
+        target.address.value = '';
+        target.name.value = '';
+        target.phone.value = '';
+        target.lat.value = '';
+        target.lng.value = '';
         $('#myModal').modal('toggle');
     },
     'blur #phone'(event, template) {
@@ -137,7 +162,6 @@ Template.editEmergency.events({
         const location = target.location.value;
         const name = target.name.value;
         const phone = target.phone.value;
-        const assigned = target.assigned.checked;
         const complete = target.complete.checked;
         var editableEmergency = Session.get('selectedEmergency');
         const id = editableEmergency._id;
@@ -151,7 +175,6 @@ Template.editEmergency.events({
             location: location,
             name: name,
             phone: phone,
-            assigned: assigned,
             complete: complete
         });
         // Clear form

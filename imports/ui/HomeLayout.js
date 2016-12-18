@@ -70,5 +70,14 @@ Template.HomeLayout.events({
         }
         Session.set('assignedBase', assigned);
         $(event.target).closest('.panel').addClass('selectedEmg');
+        var emergency = Session.get('selectedEmergency');
+        Meteor.call('emergencies.findDuplicates', emergency.loc, function (error, response) {
+            if (error) {
+                console.log(error.reason);
+            } else {
+                console.log(response);
+                Session.set("duplicates", response);
+            }
+        });
     }
 });

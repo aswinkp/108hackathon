@@ -18,6 +18,7 @@ Template.registerHelper('gt',function (a,b) {
    return a>b;
 });
 
+
 Template.MainLayout.helpers({
     unassigned : function(){
         return Emergencies.find({ owner : null}, {sort : {updatedAt: -1}});

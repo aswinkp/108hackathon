@@ -29,10 +29,29 @@ if (Meteor.isServer) {
             return true;
         }
     });
+
+    Meteor.methods({
+        'emergencies.findDuplicates'(loc){
+            return (Emergencies.aggregate([
+                {
+                    $geoNear: {
+                        near: loc,
+                        distanceField: "dist.calculated",
+                        includeLocs: "dist.location",
+                        num: 5,
+                        distanceMultiplier: 0.001,
+                        spherical: true
+                    }
+                }
+            ]));
+        }
+    });
 }
 
 Meteor.methods({
     'emergencies.insert'(obj) {
+        console.log(obj.lng);
+        console.log(obj.lat);
         Emergencies.insert({
             fire: obj.fire,
             ambulance: obj.ambulance,
@@ -47,7 +66,7 @@ Meteor.methods({
             type: "manual",
             loc: {
                 type: "Point",
-                coordinates: [obj.lng, obj.lat]
+                coordinates: [parseFloat(obj.lng), parseFloat(obj.lat)]
             },
             owner: [this.userId],
             createdAt: new Date(),
@@ -68,7 +87,7 @@ Meteor.methods({
             phone: obj.phone,
             loc: {
                 type: "Point",
-                coordinates: [obj.lng, obj.lat]
+                coordinates: [parseFloat(obj.lng), parseFloat(obj.lat)]
             },
             type: "mobile",
             createdAt: new Date(),
@@ -82,8 +101,6 @@ Meteor.methods({
     },
     'emergencies.update'(emergencyId, obj) {
         check(emergencyId, String);
-        console.log(obj.assigned);
-        console.log(obj.complete);
         Emergencies.update(emergencyId, {
             $set: {
                 fire: obj.fire,
@@ -92,13 +109,8 @@ Meteor.methods({
                 reason: obj.reason,
                 casualities: obj.casualities,
                 location: obj.location,
-                loc: {
-                    type: "Point",
-                    coordinates: [obj.lng, obj.lat]
-                },
                 name: obj.name,
                 phone: obj.phone,
-                assigned: obj.assigned,
                 complete: obj.complete,
                 updatedAt: new Date()
             }
@@ -127,6 +139,23 @@ Meteor.methods({
         } else {
             throw new Meteor.Error('not-authorized');
         }
+    },
+    'emergencies.getDistance'(phoneNo){
+        console.log("emergencies.getDistance");
+        console.log(phoneNo);
+        var emergency = Emergencies.findOne({phone: phoneNo},{sort: {createdAt: -1}});
+        console.log(emergency);
+        var list = "";
+        if (Array.isArray(emergency.assigned) && emergency.assigned.length) {
+            for (var i = 0; i < emergency.assigned.length; i++) {
+                if(i>0){
+                    list = list.concat(",");
+                }
+                list = list.concat(emergency.assigned[i]._id);
+            }
+        }
+        console.log(list);
+        return list;
     }
 
 });
